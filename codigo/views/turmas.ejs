@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UnB Avalia</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/styleTurmas.css" />
   </head>
 
   <body>
@@ -18,24 +18,31 @@
           <div class="line3"></div>
         </div>
         <ul class="nav-list">
-          <li><a href="/">Início</a></li>
-          <li><a href="/turmas">Turmas</a></li>
-          <li><a href="#">Ranking</a></li>
-          <li><a href="#">Entrar</a></li>
-          <li><a href="#">Registrar</a></li>
+          <li><a class ="nav-items" href="/">Início</a></li>
+          <li><a class ="nav-items" href="/turmas">Turmas</a></li>
+          <li><a class ="nav-items" href="#">Ranking</a></li>
+          <li><a class ="nav-items" href="#">Entrar</a></li>
+          <li><a class ="nav-items" href="#">Registrar</a></li>
         </ul>
       </nav>
     </header>
     <main>
-        <h1 class="title"> TURMAS </h1>
-
-        <ul>
+      <h1 class="title"> TURMAS </h1>
+      
+      <ol style="--length: <%= turmas.length%>" role="list">
+        <% let contador = 0 %>
         <% turmas.forEach(turma => { %>
-            <li>
-                <h2> <%= turma.nome %></h2>
+          <a href="/turmas/<%=turma.id%>"> 
+            <li class="itemTurma" style="--i: <%=contador%>">
+              <h3> <%= turma.nome_disciplina %></h3>
+              <p> <b>Período:</b> <%= turma.periodo %></p>
+              <p> <b>Professor:</b> <%= turma.nome_professor %></p>
+              <p> <b>Turma:</b> <%= turma.turma%></p>
+              <% contador++ %>
             </li>
-            <% })%>
-        </ul>
+          </a>
+          <% })%>
+      </ol>
     </main>
   </body>
 </html>

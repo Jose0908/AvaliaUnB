@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UnB Avalia</title>
+    <link rel="stylesheet" href="/css/styleTurma.css" />
+  </head>
+
+  <body>
+
+    <% const turma = contexto.turma %>
+    <% const avaliacoes = contexto.avaliacoes %>
+    <header>
+      <nav>
+        <a class="logo" href="/">UnB Avalia</a>
+        <div class="mobile-menu">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+        <ul class="nav-list">
+          <li><a href="/">Início</a></li>
+          <li><a href="/turmas">Turmas</a></li>
+          <li><a href="#">Ranking</a></li>
+          <li><a href="#">Entrar</a></li>
+          <li><a href="#">Registrar</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1 class="title"><%= turma.nome_disciplina %></h1>
+      <p> Turma: <%= turma.turma %> </p>
+      <p> Periodo: <%= turma.periodo %> </p>
+      <p> Horario: <%= turma.horario %> </p>
+      <p> Professor: <%= turma.nome_professor%> </p>
+        
+      <a href="#" id="avaliacaoLink">
+        <img src="/plus.png" class = "imagem">
+      </a>
+      <div id="avaliacaoForm" style="display: none;">
+        <form action="/turmas/create" method="POST">
+          <input class="nomeSubmit" type="text" name="nome_estudante" placeholder="Nome do estudante" />
+          <input class ="avaliacaoSubmit" type="text" name="avaliacao" placeholder="Avaliação" />
+          <select value ="Nota" name="Nota">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <input type="hidden" name="id_turma" value="<%= turma.id %>" />
+          <input type="submit" value="Enviar" />
+          </select>
+          </form>
+      </div>
+
+      <% let contador = 0 %>
+      <% if (Array.isArray(avaliacoes)) { %>
+        <% avaliacoes.reverse().forEach(avaliacao => { %>
+            <li class="itemTurma" style="--i: <%=contador%>">
+              <div class="titulo_card">
+                <h3> <%= avaliacao.nome_estudante %></h3>
+                <div class="buttons">
+                  <form action="/turmas/<%=turma.id%>/edit/<%=avaliacao.id%>" method="post">
+                    <button type="submit" style="background-color:#f5b21d">Editar</button>
+                  </form>
+                  <form action="/turmas/<%=turma.id%>/delete/<%=avaliacao.id%>" method="post">
+                    <button type="submit">Apagar</button>
+                  </form>
+                </div>
+              </div>
+              <p> Avaliacao: <%=
+               avaliacao.avaliacao %></p>
+              <p class = "nota"> <b>Nota:</b> <%= avaliacao.nota%></p>
+              <% contador++ %>
+            </li>
+          <% })%>
+          <% } %>
+        
+    </main>
+
+    <script>
+      // Quando o link de avaliação for clicado
+      document.getElementById('avaliacaoLink').addEventListener('click', function(e) {
+        e.preventDefault(); // Impede o comportamento padrão do link
+    
+        // Exibe o formulário de avaliação
+        document.getElementById('avaliacaoForm').style.display = 'block';
+        document.getElementById('avaliacaoLink').style.display = 'none';
+      });
+    </script>
+  </body>
+</html>

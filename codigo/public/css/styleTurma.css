@@ -1,0 +1,217 @@
+@import url("https://fonts.cdnfonts.com/css/coco-gothic");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+li {
+  list-style-type: none;
+}
+
+body {
+  --h: 212deg;
+  --l: 43%;
+  --brandColor: hsl(var(--h), 71%, var(--l));
+  font-family: Montserrat, sans-serif;
+  margin: 0;
+  background-color: whitesmoke;
+}
+.nav-items,
+.logo {
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.nav-items:hover {
+  opacity: 0.7;
+}
+
+.logo {
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-family: system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  background: #0e0e11;
+  height: 8vh;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+}
+
+.nav-list li {
+  letter-spacing: 3px;
+  margin-left: 32px;
+}
+
+p {
+  margin-left: 50px;
+  line-height: 1.6;
+  color: rgb(70 70 70);
+}
+
+ol {
+  list-style: none;
+  counter-reset: list;
+  padding: 0 1rem;
+}
+
+.itemTurma {
+  --stop: calc(100% / var(--length) * var(--i));
+  --l: 62%;
+  --l2: 88%;
+  --h: calc((var(--i) - 1) * (180 / var(--length)));
+  --c1: hsl(var(--h), 71%, var(--l));
+  --c2: hsl(var(--h), 71%, var(--l2));
+  position: relative;
+  counter-increment: list;
+  max-width: 45rem;
+  margin: 2rem auto;
+  padding: 2rem 1rem 1rem;
+  box-shadow: 0.1rem 0.1rem 1.5rem rgba(0, 0, 0, 0.3);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  background-color: white;
+  transition: transform 0.5s;
+}
+
+li::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(
+    to right,
+    var(--c1) var(--stop),
+    var(--c2) var(--stop)
+  );
+}
+
+h3 {
+  display: flex;
+  align-items: baseline;
+  margin: 0 0 1rem;
+  color: rgb(70 70 70);
+}
+
+.title {
+  color: #000000;
+  font-size: 50px;
+  padding-top: 50px;
+  text-align: center;
+  font-family: "Coco Gothic", sans-serif;
+}
+
+li {
+  text-decoration: none;
+}
+
+.nota {
+  text-align: end;
+}
+
+.imagem {
+  margin-top: 50px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50px;
+  height: auto;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+input[type="text"] {
+  width: 50%;
+  margin: 8px 0;
+
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.avaliacaoSubmit {
+  padding: 40px 20px;
+  text-align: start;
+}
+.avaliacaoSubmit input[type="submit"] {
+  margin-top: 50px; /* Adicionado margin-top para separar do texto acima */
+}
+.nomeSubmit {
+  padding: 12px 20px;
+}
+select {
+  width: 25;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  width: 25%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.titulo_card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: start;
+}
+
+button {
+  background-color: #ed5e68;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 5px;
+  padding: 7px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+}
+
