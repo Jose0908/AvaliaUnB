@@ -18,11 +18,11 @@
           <div class="line3"></div>
         </div>
         <ul class="nav-list">
-          <li><a class ="nav-items" href="/">Início</a></li>
-          <li><a class ="nav-items" href="/turmas">Turmas</a></li>
-          <li><a class ="nav-items" href="#">Ranking</a></li>
-          <li><a class ="nav-items" href="#">Entrar</a></li>
-          <li><a class ="nav-items" href="#">Registrar</a></li>
+          <li><a id="teste" href="/">Início</a></li>
+          <li><a href="/turmas">Turmas</a></li>
+          <li><a href="/ranking">Ranking</a></li>
+          <li><a href="/login">Entrar</a></li>
+          <li><a href="/register">Registrar</a></li>
         </ul>
       </nav>
     </header>
@@ -32,15 +32,15 @@
       <ol style="--length: <%= turmas.length%>" role="list">
         <% let contador = 0 %>
         <% turmas.forEach(turma => { %>
-          <a href="/turmas/<%=turma.id%>"> 
-            <li class="itemTurma" style="--i: <%=contador%>">
+          <li class="itemTurma" href="/turmas/<%=turma.id%>" style="--i: <%=contador%>">
+            <a href="/turmas/<%=turma.id%>"> 
               <h3> <%= turma.nome_disciplina %></h3>
               <p> <b>Período:</b> <%= turma.periodo %></p>
               <p> <b>Professor:</b> <%= turma.nome_professor %></p>
               <p> <b>Turma:</b> <%= turma.turma%></p>
               <% contador++ %>
+            </a>
             </li>
-          </a>
           <% })%>
       </ol>
     </main>

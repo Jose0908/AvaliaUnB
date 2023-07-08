@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UnB Avalia</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
+
   </head>
 
   <body>
@@ -27,15 +29,24 @@
       </nav>
     </header>
     <main>
-        <h1 class="title">UnB Avalia!</h1>
-        <p class ="subtitle">Uma nova forma de avaliar os professores</p>
-        <p class ="texto">Descubra os melhores professores e disciplinas na UnB!
-
-            Aqui, os alunos têm a oportunidade de avaliar seus professores, dando acesso a informações valiosas na hora de escolher suas disciplinas.
-            
-            Participe dessa comunidade acadêmica, compartilhe suas opiniões e faça escolhas informadas. Juntos, podemos melhorar a qualidade do ensino na UnB.</p>
-        
-        <img src="avaliacao.png" class="imagem">
+        <div class="login-form">
+            <form action="/login" method="POST">
+              <h1>Entrar</h1>
+              <div class="content">
+                <div class="input-field">
+                  <input type="email" placeholder="Email" name="email">
+                </div>
+                <div class="input-field">
+                  <input type="password" placeholder="Password" name="senha">
+                </div>
+                <a href="/register" class="link">Ainda não possui uma conta?</a>
+              </div>
+              <div class="action">
+                <button>Entrar</button>
+              </div>
+            </form>
+          </div>
     </main>
+
   </body>
 </html>

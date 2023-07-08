@@ -120,10 +120,6 @@ h3 {
   font-family: "Coco Gothic", sans-serif;
 }
 
-li {
-  text-decoration: none;
-}
-
 .nota {
   text-align: end;
 }
@@ -147,7 +143,6 @@ form {
 input[type="text"] {
   width: 50%;
   margin: 8px 0;
-
   border: 1px solid #ccc;
   border-radius: 10px;
   box-sizing: border-box;
@@ -155,7 +150,8 @@ input[type="text"] {
 
 .avaliacaoSubmit {
   padding: 40px 20px;
-  text-align: start;
+  display: inline-block;
+  vertical-align: top;
 }
 .avaliacaoSubmit input[type="submit"] {
   margin-top: 50px; /* Adicionado margin-top para separar do texto acima */
@@ -213,5 +209,9 @@ button {
 .buttons {
     display: flex;
     flex-direction: row;
+}
+
+.longInput {
+  margin-top: 20px;
 }
 

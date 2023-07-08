@@ -20,30 +20,30 @@
         <ul class="nav-list">
           <li><a href="/">Início</a></li>
           <li><a href="/turmas">Turmas</a></li>
-          <li><a href="#">Ranking</a></li>
-          <li><a href="#">Entrar</a></li>
-          <li><a href="#">Registrar</a></li>
+          <li><a href="/ranking">Ranking</a></li>
+          <li><a href="/login">Entrar</a></li>
+          <li><a href="/register">Registrar</a></li>
         </ul>
       </nav>
     </header>
     <main>
-
-        
-      <p><%=avaliacao%></p>
-
- 
-        
+      <h1 class="title" style="font-size: 50px;"> Edite sua avaliação</h1>
+      <div id="avaliacaoForm">
+        <form action="/turmas/edit/<%= avaliacao.id %>" method="POST">
+          <input class ="avaliacaoSubmit" type="text" name="avaliacao" placeholder="Avaliação" value = "<%=avaliacao.avaliacao%>"/>
+          <select value ="Nota" name="Nota">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <input type="hidden" name="id_avaliacao" value="<%= avaliacao.id %>" />
+            <input type="hidden" name="id_turma" value="<%= avaliacao.fk_id_turma %>" />
+            <input type="hidden" name="id_user" value="<%= avaliacao.fk_id_user %>" />
+            <input type="submit" value="Enviar" />
+          </select>
+          </form>
+      </div>
     </main>
-
-    <script>
-      // Quando o link de avaliação for clicado
-      document.getElementById('avaliacaoLink').addEventListener('click', function(e) {
-        e.preventDefault(); // Impede o comportamento padrão do link
-    
-        // Exibe o formulário de avaliação
-        document.getElementById('avaliacaoForm').style.display = 'block';
-        document.getElementById('avaliacaoLink').style.display = 'none';
-      });
-    </script>
   </body>
 </html>

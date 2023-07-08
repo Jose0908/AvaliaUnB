@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UnB Avalia - Registro</title>
+    <link rel="stylesheet" href="/css/login.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:400,700">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a class="logo" href="/">UnB Avalia</a>
+        <div class="mobile-menu">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+        <ul class="nav-list">
+          <li><a href="/">Início</a></li>
+          <li><a href="/turmas">Turmas</a></li>
+          <li><a href="/ranking">Ranking</a></li>
+          <li><a href="/login">Entrar</a></li>
+          <li><a href="/register">Registrar</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div class="login-form">
+        <form action="/register" method="POST">
+          <h1>Registrar</h1>
+          <div class="content">
+            <div class="input-field">
+              <input type="text" placeholder="Nome" name="nome" required>
+            </div>
+            <div class="input-field">
+              <input type="email" placeholder="Email" name="email" required>
+            </div>
+            <div class="input-field">
+              <input type="text" placeholder="Matrícula" name="matricula" required>
+            </div>
+            <div class="input-field">
+              <input type="text" placeholder="Curso" name="curso" required>
+            </div>
+            <div class="input-field">
+              <input type="password" placeholder="Senha" name="senha" required>
+            </div>
+            <a href="/login" class="link">Já possui uma conta?</a>
+            <% if (error) { %>
+              <p style="margin: 20px 0 0 0"><%= error %></p>
+            <% } %>
+          </div>
+          <div class="action">
+            <button type="submit">Cadastrar</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

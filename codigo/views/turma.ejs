@@ -23,9 +23,9 @@
         <ul class="nav-list">
           <li><a href="/">Início</a></li>
           <li><a href="/turmas">Turmas</a></li>
-          <li><a href="#">Ranking</a></li>
-          <li><a href="#">Entrar</a></li>
-          <li><a href="#">Registrar</a></li>
+          <li><a href="/ranking">Ranking</a></li>
+          <li><a href="/login">Entrar</a></li>
+          <li><a href="/register">Registrar</a></li>
         </ul>
       </nav>
     </header>
@@ -70,8 +70,7 @@
                   </form>
                 </div>
               </div>
-              <p> Avaliacao: <%=
-               avaliacao.avaliacao %></p>
+              <p> Avaliacao: <%=avaliacao.avaliacao %></p>
               <p class = "nota"> <b>Nota:</b> <%= avaliacao.nota%></p>
               <% contador++ %>
             </li>

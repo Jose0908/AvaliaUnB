@@ -1,7 +1,7 @@
 import express from 'express'
-import { getUser, getUsers, createUser, deleteUser, updateUser} from './crud-usuario.js'
+import { getUsers, createUser, deleteUser, updateUser} from './crud-usuario.js'
 import { getTurma, getTurmas, createTurma, deleteTurma, updateTurma } from './crud-turmas.js'
-import { getAvaliacao, getAvaliacaoFromTurma, getAvaliacoes, createAvaliacao, deleteAvaliacao } from './crud-avaliacao.js'
+import { getAvaliacao, updateAvaliacao, getAvaliacaoFromTurma, getAvaliacoes, createAvaliacao, deleteAvaliacao } from './crud-avaliacao.js'
 
 const app = express()
 app.set("view engine", "ejs")
@@ -10,11 +10,6 @@ app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   res.render("index.ejs")
-})
-
-app.get('/avaliacoes', async (req, res) => {
-  const avaliacoes = await deleteAvaliacao(10)
-  res.send(avaliacoes)
 })
 
 app.get('/turmas', async (req, res) => {
@@ -53,24 +48,44 @@ app.post('/turmas/:idTurma/edit/:idAvaliacao', async (req, res) => {
 
 app.get('/turmas/:idTurma/edit/:idAvaliacao', async (req, res) => {
   const idAvaliacao = req.params.idAvaliacao
-  const avaliacao = await getAvaliacao(idAvaliacao)
-  console.log(avaliacao)
+  const [avaliacao] = await getAvaliacao(idAvaliacao)
   res.render("editAvaliacao.ejs", {avaliacao})
 })
 
-
-app.get('/usuarios', async (req, res) => {
-  const usuarios = await getUsers()
-  res.send(usuarios)
+app.post('/turmas/edit/:idAvaliacao', async (req, res) => {
+  const idAvaliacao = req.params.idAvaliacao
+  const avaliacao = req.body
+  const result = await updateAvaliacao(idAvaliacao, avaliacao)
+  res.redirect("/turmas/"+avaliacao.id_turma)
 })
 
-app.post('/usuarios', async (req, res) => {
-  const { matricula, isADmin, nome, email, curso, senha } = req.body
-  const result = await createUser(matricula, isADmin, nome, email, curso, senha)
-  res.status(201).send('foi')
+app.get('/login', (req, res) => {
+  res.render("login.ejs")
 })
 
-app.use(express.json())
+app.post('/login', (req, res) => {
+  res.redirect("/")
+})
+
+app.get('/register', (req, res) => {
+  res.render("register.ejs", {error: ''})
+})
+app.post('/register', async (req, res) => {
+  const dados = req.body;
+  const create = await createUser(dados);
+  console.log(create)
+  if (create === 'Usuário criado com sucesso') {
+    res.redirect("/");
+  } else if (create === 'Matrícula já cadastrada') {
+    res.render("register.ejs", { error: 'Matrícula já cadastrada' });
+  } else if (create === 'Email já cadastrado') {
+    res.render("register.ejs", { error: 'E-mail já cadastrado' });
+  } 
+})
+
+app.get('/ranking', (req, res) => {
+  res.render("ranking.ejs")
+})
 
 app.listen(3000, () => {
   console.log(`Servidor rodando em localhost:3000`)

@@ -54,5 +54,10 @@ export async function deleteAvaliacao(id) {
     return result.affectedRows === 1 ? 'Turma deletada com sucesso' : 'Turma não encontrada';
 }
 
-
+export async function updateAvaliacao(id, avaliacao) {
+    const [result] = await pool.query(`
+    UPDATE Avaliacoes SET avaliacao = ?, nota = ? WHERE id = ?
+    `, [avaliacao.avaliacao, avaliacao.Nota, id]);
+    return result.affectedRows === 1 ? 'Avaliacao atualizada com sucesso' : 'Avaliacao não encontrada';
+}
 
