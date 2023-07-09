@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UnB Avalia</title>
+    <link rel="stylesheet" href="/css/admin.css" />
+  </head>
+
+  <body>
+    <% nomeUsuario = contexto.nomeUsuario %> <% isAdmin = contexto.isAdmin %> <%
+    usuarios = contexto.usuarios %> <% let logged = (typeof nomeUsuario !=
+    'undefined') %> <% if (logged) {nomeUsuario = nomeUsuario.split(' ')[0]} %>
+    <header>
+      <nav>
+        <a class="logo" href="/">UnB Avalia</a>
+        <div class="mobile-menu">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+        <ul class="nav-list">
+          <li><a href="/">Início</a></li>
+          <li><a href="/turmas">Turmas</a></li>
+          <li><a href="/ranking">Ranking</a></li>
+          <% if(isAdmin) { %>
+          <li><a href="/admin">Admin</a></li>
+          <% } %> <% if (!logged) { %>
+          <li><a href="/login">Entrar</a></li>
+          <li><a href="/register">Registrar</a></li>
+          <% } %> <% if(logged) { %>
+          <li style="color: white">Logado como <%= nomeUsuario %></li>
+          <li><a href="/login/logout">Sair</a></li>
+          <% } %>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1 class="title">Usuários</h1>
+      <div class="divTable">
+        <table id="customers">
+          <tr>
+            <th>Nome</th>
+            <th>Matrícula</th>
+            <th>Email</th>
+            <th>Curso</th>
+            <th>Admin</th>
+            <th>Senha</th>
+            <th>Ações</th>
+          </tr>
+          <% usuarios.forEach (usuario => { %>
+          <tr>
+            <td><%= usuario.nome %></td>
+            <td><%= usuario.matricula %></td>
+            <td><%= usuario.email %></td>
+            <td><%= usuario.curso %></td>
+            <td><%= usuario.isAdmin %></td>
+            <td><%= usuario.senha %></td>
+            <td id="td_buttons">
+              <div class="buttons">
+              <form
+                action="/admin/editUser/<%= usuario.id %>"
+                method="GET"
+              >
+                <button
+                  class="actionButtons"
+                  type="submit"
+                  style="background-color: #f5b21d"
+                >
+                  Editar
+                </button>
+              </form>
+              <form
+                action="/admin/deleteUser/<%= usuario.id %>"
+                method="POST"
+              >
+                <button class="actionButtons" type="submit">Apagar</button>
+              </form>
+              </div>
+            </td>
+          </tr>
+          <% }) %>
+        </table>
+      </div>
+    </main>
+  </body>
+</html>

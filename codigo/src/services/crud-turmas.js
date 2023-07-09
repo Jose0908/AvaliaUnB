@@ -1,14 +1,5 @@
-import mysql from 'mysql2';
-import dotenv from 'dotenv';
-dotenv.config()
-
-
-const pool = mysql.createPool({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE
-}).promise();
+import pool from './initBd.js';
+import Turma from '../models/turmaModel.js';
 
   export async function getTurmas() {
     const [rows] = await pool.query(`
@@ -54,7 +45,4 @@ export async function getAvaliacoes() {
   return rows
 }
 
-const av = await getAvaliacoes()
-/*
-console.log(avaliacoes)
-*/
+

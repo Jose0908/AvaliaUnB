@@ -1,15 +1,4 @@
-import mysql from 'mysql2';
-import dotenv from 'dotenv';
-dotenv.config()
-
-const pool = mysql.createPool({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE
-}).promise();
-
-// Avaliacao tem campos id, avaliacao, fk_id_turma, fk_id_user
+import pool from './initBd.js';
 
 export async function getAvaliacoes() {
     const [rows] = await pool.query(`SELECT * FROM Avaliacoes`);
@@ -37,8 +26,6 @@ export async function getAvaliacaoFromTurma(id_turma) {
 }
 
 export async function createAvaliacao(avaliacao) {
-
-    // Recuperar id do usuario a partir do seu nome:
     const [id_usuario] = await pool.query(`
     SELECT id FROM Usuarios WHERE nome = ?`, [avaliacao.nome_estudante]);
     console.log(id_usuario[0].id)
