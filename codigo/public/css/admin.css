@@ -104,3 +104,15 @@ button {
   background-color: #fff;
   border: 0px solid #ddd;
 }
+
+input {
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.BotaoCriacao {
+  display: flex;
+  justify-content: center;
+}
+

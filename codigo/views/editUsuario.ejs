@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UnB Avalia</title>
+    <link rel="stylesheet" href="/css/editUser.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <a class="logo" href="/">UnB Avalia</a>
+        <div class="mobile-menu">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+        <ul class="nav-list">
+          <li><a href="/">Início</a></li>
+          <li><a href="/turmas">Turmas</a></li>
+          <li><a href="/ranking">Ranking</a></li>
+          <li><a href="/login">Entrar</a></li>
+          <li><a href="/register">Registrar</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div id="editarUsuarioForm">
+        <form action="/admin/editUser/<%= user.id %>" method="POST">
+          <label for="nome">Nome</label>
+          <input type="text" name="nome" placeholder="Nome do Usuario" value = "<%=user.nome%>"/>
+          <label for="matricula">Matricula</label>
+          <input type="text" name="matricula" placeholder="Matricula do Usuario" value = "<%=user.matricula%>"/>
+          <label for="email">Email</label>
+          <input type="text" name="email" placeholder="Email do Usuario" value = "<%=user.email%>"/>
+          <label for="curso">Curso</label>
+          <input type="text" name="curso" placeholder="Curso do Usuario" value = "<%=user.curso%>"/>
+          <label for="senha">Senha</label>
+          <input type="text" name="senha" placeholder="Senha do Usuario" value = "<%=user.senha%>"/>
+          <label for="isAdmin">Admin</label>
+
+          <select value ="isAdmin" name="isAdmin">
+            <option value="1">Sim</option>
+            <% if (user.isAdmin) { %>
+            <option value="0">Não</option>
+            <% } else { %>
+            <option selected="select" value="0">Não</option>
+          </select>
+          <% } %>
+            <input type="submit" value="Enviar" />
+          </form>
+      </div>
+    </main>
+  </body>
+</html>

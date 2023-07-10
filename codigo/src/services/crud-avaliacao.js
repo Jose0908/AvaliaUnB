@@ -38,7 +38,7 @@ export async function createAvaliacao(avaliacao) {
 
 export async function deleteAvaliacao(id) {
     const [result] = await pool.query("DELETE FROM Avaliacoes WHERE id = ?", [id]);
-    return result.affectedRows === 1 ? 'Turma deletada com sucesso' : 'Turma não encontrada';
+    return result.affectedRows === 1 ? 'Avaliacao deletada com sucesso' : 'Avaliacao não encontrada';
 }
 
 export async function updateAvaliacao(id, avaliacao) {

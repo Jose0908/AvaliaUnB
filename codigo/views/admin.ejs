@@ -49,34 +49,84 @@
             <th>Senha</th>
             <th>Ações</th>
           </tr>
-          <% usuarios.forEach (usuario => { %>
+          <% usuarios.forEach(usuario => { %> <% const admin = usuario.isAdmin ?
+          'Sim' : 'Não'; %>
           <tr>
             <td><%= usuario.nome %></td>
             <td><%= usuario.matricula %></td>
             <td><%= usuario.email %></td>
             <td><%= usuario.curso %></td>
-            <td><%= usuario.isAdmin %></td>
+            <td><%= admin %></td>
             <td><%= usuario.senha %></td>
             <td id="td_buttons">
               <div class="buttons">
-              <form
-                action="/admin/editUser/<%= usuario.id %>"
-                method="GET"
-              >
-                <button
-                  class="actionButtons"
-                  type="submit"
-                  style="background-color: #f5b21d"
+                <form action="/admin/editUser/<%= usuario.id %>" method="GET">
+                  <button
+                    class="actionButtons"
+                    type="submit"
+                    style="background-color: #f5b21d"
+                  >
+                    Editar
+                  </button>
+                </form>
+                <form
+                  action="/admin/deleteUser/<%= usuario.id %>"
+                  method="POST"
                 >
-                  Editar
-                </button>
-              </form>
-              <form
-                action="/admin/deleteUser/<%= usuario.id %>"
-                method="POST"
-              >
-                <button class="actionButtons" type="submit">Apagar</button>
-              </form>
+                  <button class="actionButtons" type="submit">Apagar</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <% }) %>
+        </table>
+      </div>
+      <div class="BotaoCriacao">
+      <button id="criarUsuarioBtn" style="background-color: green">
+        Criar novo usuário
+      </button>
+    </div>
+
+
+      <h1 class="title">Denúncias</h1>
+      <% avaliacoes = contexto.avaliacoes %>
+      <% denuncias = contexto.denuncias %> 
+      <div class="divTable">
+        <table id="customers">
+          <tr>
+            <th>Denunciante</th>
+            <th>Denunciado</th>
+            <th>Motivo</th>
+            <th>Avaliação</th>
+          </tr>
+          <% denuncias.forEach(denuncia => { %> 
+          <tr>
+            <td><%= denuncia.nome_denunciante %></td>
+            <td><%= denuncia.nome_denunciado %></td>
+            <td><%= denuncia.motivo %></td>
+            <td><%= denuncia.avaliacao %></td>
+            
+            <td id="td_buttons">
+              <div class="buttons">
+                <form
+                  action="/admin/acceptDenuncia/<%= denuncia.id %>"
+                  method="POST"
+                >
+                  <input type="hidden" name="id_avaliacao" value="<%= denuncia.id_avaliacao %>">
+                  <button
+                    class="actionButtons"
+                    type="submit"
+                    style="background-color: #299a43"
+                  >
+                    Aceitar
+                  </button>
+                </form>
+                <form
+                  action="/admin/ignoreDenuncia/<%= denuncia.id %>"
+                  method="POST"
+                >
+                  <button class="actionButtons" type="submit">Ignorar</button>
+                </form>
               </div>
             </td>
           </tr>
@@ -84,5 +134,28 @@
         </table>
       </div>
     </main>
+
+    <script>
+      const criarUsuarioBtn = document.getElementById("criarUsuarioBtn");
+
+      criarUsuarioBtn.addEventListener("click", () => {
+        const table = document.getElementById("customers");
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+          <td colspan="7">
+            <form action="/admin/createUser" method="POST">
+              <input type="text" name="nome" placeholder="Nome" />
+              <input type="text" name="matricula" placeholder="Matrícula" />
+              <input type="email" name="email" placeholder="Email" />
+              <input type="text" name="curso" placeholder="Curso" />
+              <input type="text" name="admin" placeholder="Admin" />
+              <input type="password" name="senha" placeholder="Senha" />
+              <input type="submit" value="Enviar" />
+            </form>
+          </td>
+        `;
+        table.appendChild(newRow);
+      });
+    </script>
   </body>
 </html>

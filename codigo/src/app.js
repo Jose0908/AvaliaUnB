@@ -7,6 +7,7 @@ import login from "./controllers/login.js";
 import register from "./controllers/register.js";
 import turmaController from "./controllers/turmaController.js";
 import adminController from "./controllers/adminController.js";
+import denunciaController from "./controllers/denunciaController.js";
 
 const app = express();
 app.set("view engine", "ejs");
@@ -27,6 +28,7 @@ app.use("/login", login);
 app.use("/register", register);
 app.use("/turmas", turmaController);
 app.use("/admin", adminController);
+app.use("/denuncia", denunciaController);
 
 
 app.get("/", (req, res) => {

@@ -34,6 +34,11 @@ export async function getUserbyEmail(email) {
   );
 }
 
+export async function getUserbyId(id) {
+  const [rows] = await pool.query("SELECT * FROM Usuarios WHERE id = ?", [id]);
+  return rows.length === 0 ? "Usuario não encontrado" : rows;
+}
+
 export async function createUser(dados) {
   const matricula = dados.matricula;
   const isAdmin = 0;
@@ -71,16 +76,11 @@ export async function deleteUser(id) {
 }
 
 export async function updateUser(
-  matricula,
-  isADmin,
-  nome,
-  email,
-  curso,
-  senha
+  id, user
 ) {
   const [result] = await pool.query(
-    "UPDATE Usuarios SET nome = ?, email = ?, senha = ?, curso = ? WHERE matricula = ?",
-    [nome, email, senha, curso, matricula]
+    "UPDATE Usuarios SET nome = ?, email = ?, senha = ?, curso = ?, matricula = ?, isAdmin = ? WHERE id = ?",
+    [user.nome, user.email, user.senha, user.curso, user.matricula, user.isAdmin, id]
   );
   return result.affectedRows === 1
     ? "Usuário atualizado com sucesso"
