@@ -69,3 +69,12 @@ export async function updateAvaliacao(id, avaliacao) {
     : "Avaliacao não encontrada";
 }
 
+export async function handleDenuncia (id, acao) {
+  const [result] = await pool.query(
+    `
+    call AvaliarDenunciaComentarioOfensivo(?, ?)
+    `,
+    [id, acao]
+  );
+}
+

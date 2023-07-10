@@ -9,6 +9,9 @@
   </head>
 
   <body>
+    <% nomeUsuario = contexto.nomeUsuario %> <% isAdmin = contexto.isAdmin %> <%
+    let logged = (typeof nomeUsuario != 'undefined') %> <% if (logged)
+    {nomeUsuario = nomeUsuario.split(' ')[0]} %>
     <header>
       <nav>
         <a class="logo" href="/">UnB Avalia</a>
@@ -21,12 +24,20 @@
           <li><a href="/">Início</a></li>
           <li><a href="/turmas">Turmas</a></li>
           <li><a href="/ranking">Ranking</a></li>
+          <% if(isAdmin) { %>
+          <li><a href="/admin">Admin</a></li>
+          <% } %> <% if (!logged) { %>
           <li><a href="/login">Entrar</a></li>
           <li><a href="/register">Registrar</a></li>
+          <% } %> <% if(logged) { %>
+          <li><a href="/perfil">Logado como <%= nomeUsuario %></a></li>
+          <li><a href="/login/logout">Sair</a></li>
+          <% } %>
         </ul>
       </nav>
     </header>
     <main>
+      <% user = contexto.user %>
       <div id="editarUsuarioForm">
         <form action="/admin/editUser/<%= user.id %>" method="POST">
           <label for="nome">Nome</label>

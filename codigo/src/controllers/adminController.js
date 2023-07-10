@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import { getUsers, createUser, updateUser, deleteUser, getUserbyId }  from "../services/crud-usuario.js";
-import { getDenuncias, deleteDenuncia } from "../services/crud-denuncia.js";
+import { getDenuncias, deleteDenuncia, handleDenuncia } from "../services/crud-denuncia.js";
 import { deleteAvaliacao, getAvaliacoes } from "../services/crud-avaliacao.js";
 const router = Router();
 
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
   const reports = await getDenuncias()
   const avaliacoes = await getAvaliacoes()
     const contexto = {
-      nomeUsuario: nomeUsuario,
+      nome: nomeUsuario,
       isAdmin: isAdmin,
       usuarios: usuarios,
       denuncias: reports,
@@ -32,7 +32,13 @@ router.get("/", async (req, res) => {
   router.get("/editUser/:id", async (req, res) => {
     const id = req.params.id;
     const [user] = await getUserbyId(id)
-    res.render("editUsuario.ejs", {user})
+    const contexto = {
+      user: user,
+      isAdmin: req.session.isAdmin,
+      nome: req.session.nome,
+    };
+  
+    res.render("editUsuario.ejs", {contexto})
   })
   
   router.post("/editUser/:id", async (req, res) => {
@@ -52,18 +58,11 @@ router.get("/", async (req, res) => {
     res.redirect("/admin")
   })
 
-  router.post ("/ignoreDenuncia/:id", async (req, res) => {
+  router.post("/handleDenuncia/:id", async (req, res) => {
+    const acao = req.body.acao;
     const id = req.params.id;
-    const denunciaIgnorada = await deleteDenuncia(id)
-    console.log(denunciaIgnorada)
+    const denunciaHandled = await handleDenuncia(id, acao)
     res.redirect("/admin")
   })
 
-  router.post("/acceptDenuncia/:id", async (req, res) => {
-    const idDenuncia = req.params.id;
-    const idAvaliacao = req.body.id_avaliacao;
-    const avaliacaoDeletada = await deleteAvaliacao(idAvaliacao)
-    const denunciaDeletada= await deleteDenuncia(idDenuncia)
-    res.redirect("/admin")
-  })
 export default router;

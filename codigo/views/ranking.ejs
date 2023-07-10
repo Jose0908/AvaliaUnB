@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UnB Avalia</title>
     <link rel="stylesheet" href="/css/ranking.css" />
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
-
   </head>
 
   <body>
+    <% nomeUsuario = contexto.nome %> <% isAdmin = contexto.isAdmin %> <% let
+    logged = (typeof nomeUsuario != 'undefined') %> <% if (logged) {nomeUsuario
+    = nomeUsuario.split(' ')[0]} %>
     <header>
       <nav>
         <a class="logo" href="/">UnB Avalia</a>
@@ -23,14 +24,39 @@
           <li><a href="/">Início</a></li>
           <li><a href="/turmas">Turmas</a></li>
           <li><a href="/ranking">Ranking</a></li>
+          <% if(isAdmin) { %>
+          <li><a href="/admin">Admin</a></li>
+          <% } %> <% if (!logged) { %>
           <li><a href="/login">Entrar</a></li>
           <li><a href="/register">Registrar</a></li>
+          <% } %> <% if(logged) { %>
+          <li><a href="/perfil">Logado como <%= nomeUsuario %></a></li>
+          <li><a href="/login/logout">Sair</a></li>
+          <% } %>
         </ul>
       </nav>
     </header>
     <main>
-
+      <% ranking = contexto.ranking %>
+      <h1 class="title">Ranking das Turmas</h1>
+      <div class="divTable">
+        <table id="customers">
+          <tr>
+            <th>#</th>
+            <th>Turma</th>
+            <th>Média</th>
+            <th>Avaliações</th>
+          </tr>
+          <% ranking.forEach(rank => { %>
+          <tr>
+            <td><%= rank.contador %></td>
+            <td><%= rank.nome_disciplina + ' - ' + rank.nome_turma %></td>
+            <td><%= parseFloat(rank.media_avaliacao).toFixed(2) %></td>
+            <td><%= rank.quantidade_avaliacoes %></td>
+          </tr>
+          <% }) %>
+        </table>
+      </div>
     </main>
-
   </body>
 </html>

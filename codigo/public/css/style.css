@@ -1,84 +1,89 @@
-@import url('https://fonts.cdnfonts.com/css/coco-gothic');          
+@import url("https://fonts.cdnfonts.com/css/coco-gothic");
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
-
 * {
-    margin: 0;
-    padding: 0;
-  }
-  
-  a {
-    color: #fff;
-    text-decoration: none;
-    transition: 0.3s;
-  }
-  
-  a:hover {
-    opacity: 0.7;
-  }
-  
-  .logo {
-    font-size: 24px;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-  }
-  
-  nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    font-family: system-ui, -apple-system, Helvetica, Arial, sans-serif;
-    background: #0e0e11;
-    height: 8vh;
-  }
-  
-  main {
-    background-color: #ffffff;
-    background-size: cover;
-    height: 92vh;
-    
-    display: flex;
-    flex-direction: column;
-    margin-left: 10%;
-    margin-right: 10%;
-  }
+  margin: 0;
+  padding: 0;
+}
 
-  .nav-list {
-    list-style: none;
-    display: flex;
-  }
-  
-  .nav-list li {
-    letter-spacing: 3px;
-    margin-left: 32px;
-  }
+a {
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s;
+}
 
-  .title {
-    font-family: 'Montserrat', sans-serif;
-    color: #000000;
-    font-size: 50px;
-    padding-top: 50px;
-    text-align: center;
-  }
-  .subtitle {
-    color: #b1b1b1;
-    font-size: 20px;
-    padding-top: 20px;
-    text-align: center;
-  }
-  
-  .texto {
-    color: #000000;
-    font-size: 20px;
-    padding-top: 20px;
-    text-align: center;
-  }
-  
-  .imagem {
-    margin-top: 50px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width:200px;
-    height:auto;
-  }
+a:hover {
+  opacity: 0.7;
+}
+
+.logo {
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-family: system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  background: #0e0e11;
+  height: 8vh;
+}
+
+main {
+  background-color: whitesmoke;
+  background-size: cover;
+  height: 92vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+}
+
+.nav-list li {
+  letter-spacing: 3px;
+  margin-left: 32px;
+}
+
+.title {
+  font-family: "Montserrat", sans-serif;
+  color: #000000;
+  font-size: 50px;
+  padding-top: 50px;
+  text-align: center;
+}
+.subtitle {
+  color: #b1b1b1;
+  font-size: 20px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.texto {
+  color: #000000;
+  font-size: 20px;
+  padding-top: 20px;
+  text-align: center;
+  width: 80%;
+}
+
+.imagem {
+  margin-top: 50px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  height: auto;
+  border-radius: 100%;
+}
+
+.div-texto {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

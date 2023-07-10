@@ -8,6 +8,7 @@ import register from "./controllers/register.js";
 import turmaController from "./controllers/turmaController.js";
 import adminController from "./controllers/adminController.js";
 import denunciaController from "./controllers/denunciaController.js";
+import rankingController from "./controllers/rankingController.js";
 
 const app = express();
 app.set("view engine", "ejs");
@@ -29,7 +30,7 @@ app.use("/register", register);
 app.use("/turmas", turmaController);
 app.use("/admin", adminController);
 app.use("/denuncia", denunciaController);
-
+app.use("/ranking", rankingController);
 
 app.get("/", (req, res) => {
   const nomeUsuario = req.session.nome;
@@ -39,10 +40,6 @@ app.get("/", (req, res) => {
     isAdmin: isAdmin,
   };
   res.render("index.ejs", {contexto});
-});
-
-app.get("/ranking", (req, res) => {
-  res.render("ranking.ejs");
 });
 
 app.listen(3000, () => {

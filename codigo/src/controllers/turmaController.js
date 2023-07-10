@@ -21,7 +21,12 @@ router.use(express.static("public"));
 
 router.get("/", async (req, res) => {
   const turmas = await getTurmas();
-  res.render("turmas.ejs", { turmas });
+  const contexto = {
+    turmas: turmas,
+    isAdmin: req.session.isAdmin,
+    nome: req.session.nome,
+  }
+  res.render("turmas.ejs", { contexto });
 });
 
 router.get("/:id", async (req, res) => {
@@ -60,7 +65,12 @@ router.post("/:idTurma/edit/:idAvaliacao", async (req, res) => {
 router.get("/:idTurma/edit/:idAvaliacao", async (req, res) => {
   const idAvaliacao = req.params.idAvaliacao;
   const [avaliacao] = await getAvaliacao(idAvaliacao);
-  res.render("editAvaliacao.ejs", { avaliacao });
+  const contexto = {
+    avaliacao: avaliacao,
+    isAdmin: req.session.isAdmin,
+    nome: req.session.nome,
+  };
+  res.render("editAvaliacao.ejs", { contexto });
 });
 
 router.post("/edit/:idAvaliacao", async (req, res) => {

@@ -9,9 +9,9 @@
   </head>
 
   <body>
-    <% nomeUsuario = contexto.nomeUsuario %> <% isAdmin = contexto.isAdmin %> <%
-    usuarios = contexto.usuarios %> <% let logged = (typeof nomeUsuario !=
-    'undefined') %> <% if (logged) {nomeUsuario = nomeUsuario.split(' ')[0]} %>
+    <% nomeUsuario = contexto.nome %> <% isAdmin = contexto.isAdmin %> <% let
+    logged = (typeof nomeUsuario != 'undefined') %> <% if (logged) {nomeUsuario
+    = nomeUsuario.split(' ')[0]} %> <% usuarios = contexto.usuarios %>
     <header>
       <nav>
         <a class="logo" href="/">UnB Avalia</a>
@@ -30,7 +30,7 @@
           <li><a href="/login">Entrar</a></li>
           <li><a href="/register">Registrar</a></li>
           <% } %> <% if(logged) { %>
-          <li style="color: white">Logado como <%= nomeUsuario %></li>
+          <li><a href="/perfil">Logado como <%= nomeUsuario %></a></li>
           <li><a href="/login/logout">Sair</a></li>
           <% } %>
         </ul>
@@ -82,15 +82,14 @@
         </table>
       </div>
       <div class="BotaoCriacao">
-      <button id="criarUsuarioBtn" style="background-color: green">
-        Criar novo usuário
-      </button>
-    </div>
-
+        <button id="criarUsuarioBtn">
+          Criar novo usuário
+        </button>
+      </div>
 
       <h1 class="title">Denúncias</h1>
-      <% avaliacoes = contexto.avaliacoes %>
-      <% denuncias = contexto.denuncias %> 
+      <% avaliacoes = contexto.avaliacoes %> <% denuncias = contexto.denuncias
+      %>
       <div class="divTable">
         <table id="customers">
           <tr>
@@ -98,21 +97,26 @@
             <th>Denunciado</th>
             <th>Motivo</th>
             <th>Avaliação</th>
+            <th>Ações</th>
           </tr>
-          <% denuncias.forEach(denuncia => { %> 
+          <% denuncias.forEach(denuncia => { %>
           <tr>
             <td><%= denuncia.nome_denunciante %></td>
             <td><%= denuncia.nome_denunciado %></td>
             <td><%= denuncia.motivo %></td>
             <td><%= denuncia.avaliacao %></td>
-            
+
             <td id="td_buttons">
               <div class="buttons">
                 <form
-                  action="/admin/acceptDenuncia/<%= denuncia.id %>"
+                  action="/admin/handleDenuncia/<%= denuncia.id %>"
                   method="POST"
                 >
-                  <input type="hidden" name="id_avaliacao" value="<%= denuncia.id_avaliacao %>">
+                  <input
+                    type="hidden"
+                    name="acao"
+                    value="aceitar"
+                  />
                   <button
                     class="actionButtons"
                     type="submit"
@@ -122,9 +126,14 @@
                   </button>
                 </form>
                 <form
-                  action="/admin/ignoreDenuncia/<%= denuncia.id %>"
+                  action="/admin/handleDenuncia/<%= denuncia.id %>"
                   method="POST"
                 >
+                <input
+                    type="hidden"
+                    name="acao"
+                    value="ignorar"
+                  />
                   <button class="actionButtons" type="submit">Ignorar</button>
                 </form>
               </div>

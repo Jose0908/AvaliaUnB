@@ -1,5 +1,4 @@
 import pool from './initBd.js';
-import Usuario from '../models/usuario.js';
 
 export async function getUsers() {
   const [rows] = await pool.query("SELECT * FROM Usuarios");
@@ -23,15 +22,7 @@ export async function getUserbyEmail(email) {
     return ("Usuarios não encontrado")
   }
 
-  return new Usuario(
-    user[0].id,
-    user[0].matricula,
-    user[0].isAdmin,
-    user[0].nome,
-    user[0].email,
-    user[0].curso,
-    user[0].senha
-  );
+  return user[0]
 }
 
 export async function getUserbyId(id) {
@@ -41,7 +32,16 @@ export async function getUserbyId(id) {
 
 export async function createUser(dados) {
   const matricula = dados.matricula;
-  const isAdmin = 0;
+  let isAdmin = dados.admin;
+  console.log(isAdmin)
+  if (typeof isAdmin == 'undefined' || isAdmin === 'Não') {
+    isAdmin = 0;
+  }
+  if (isAdmin === 'Sim') {
+    console.log('entrou')
+    isAdmin = 1;
+  }
+  console.log(isAdmin)
   const nome = dados.nome;
   const email = dados.email;
   const curso = dados.curso;

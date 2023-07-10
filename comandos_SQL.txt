@@ -1,56 +1,42 @@
-CREATE TABLE Usuario (
-  matricula INT PRIMARY KEY,
-  isAdmin BOOLEAN,
-  nome VARCHAR(255),
-  email VARCHAR(255),
-  curso VARCHAR(255),
-  senha VARCHAR(255)
-);
+-- VIEW
 
-CREATE TABLE Professores (
-  id_professor INT PRIMARY KEY,
-  nome VARCHAR(255),
-  fk_cod_depto INT,
-  FOREIGN KEY (fk_cod_depto) REFERENCES Departamentos(cod_depto)
-);
+CREATE VIEW ranking_turmas AS
+SELECT 
+  ROW_NUMBER() OVER (ORDER BY AVG(A.nota) DESC) AS contador,
+  D.nome AS nome_disciplina,
+  T.nome_turma,
+  AVG(A.nota) AS media_avaliacao,
+  COUNT(A.id) AS quantidade_avaliacoes
+FROM Turmas T
+JOIN Disciplinas D ON T.fk_id_disciplina = D.id
+JOIN Avaliacoes A ON T.id = A.fk_id_turma
+GROUP BY T.id, D.nome;
 
-CREATE TABLE Disciplinas (
-  cod_disciplina INT PRIMARY KEY,
-  nome VARCHAR(255),
-  fk_cod_depto INT,
-  FOREIGN KEY (fk_cod_depto) REFERENCES Departamentos(cod_depto)
-);
 
-CREATE TABLE Turmas (
-  turma VARCHAR(255),
-  periodo VARCHAR(255),
-  professor VARCHAR(255),
-  horario VARCHAR(255),
-  vagas_ocupadas INT,
-  total_vagas INT,
-  local VARCHAR(255),
-  fk_cod_disciplina INT,
-  cod_depto INT,
-  FOREIGN KEY (fk_cod_disciplina) REFERENCES Disciplinas(cod_disciplina),
-  FOREIGN KEY (cod_depto) REFERENCES Departamentos(cod_depto)
-);
+-- PROCEDURE
 
-CREATE TABLE Departamentos (
-  cod_depto INT PRIMARY KEY,
-  nome VARCHAR(255)
-);
-
-CREATE TABLE Avaliacoes (
-  codigo_avaliacao INT PRIMARY KEY,
-  fk_matricula INT,
-  FOREIGN KEY (fk_matricula) REFERENCES Usuario(matricula)
-);
-
-CREATE TABLE Denuncias (
-  codigo_denuncia INT PRIMARY KEY,
-  fk_codigo_avaliacao INT,
-  fk_matricula INT,
-  FOREIGN KEY (fk_codigo_avaliacao) REFERENCES Avaliacoes(codigo_avaliacao),
-  FOREIGN KEY (fk_matricula) REFERENCES Usuario(matricula)
-);
-
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AvaliarDenunciaComentarioOfensivo`(
+    IN denuncia_id INT,
+    IN acao VARCHAR(10) -- 'ignorar', 'aceitar'
+)
+BEGIN
+   DECLARE avaliacao_id INT;
+   
+   -- Obter ID da avaliação associada à denúncia
+    SELECT id_avaliacao INTO avaliacao_id
+    FROM Denuncias
+    WHERE id = denuncia_id;
+    
+    IF acao = 'ignorar' THEN
+    DELETE FROM Denuncias 
+    WHERE id = denuncia_id;
+    
+    ELSEIF acao = 'aceitar' THEN
+        -- Aceitar a denúncia e excluir a avaliação associada
+        DELETE FROM Avaliacoes
+        WHERE id = avaliacao_id;
+        -- Excluir a denúncia da tabela Denuncias
+        DELETE FROM Denuncias
+        WHERE id = denuncia_id;
+    END IF;
+END

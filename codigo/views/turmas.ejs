@@ -10,6 +10,10 @@
 
   <body>
     <header>
+      <% nomeUsuario = contexto.nome %> <% isAdmin = contexto.isAdmin %> <%
+      turmas = contexto.turmas %> <% let logged = (typeof nomeUsuario !=
+      'undefined') %> <% if (logged) {nomeUsuario = nomeUsuario.split(' ')[0]}
+      %>
       <nav>
         <a class="logo" href="/">UnB Avalia</a>
         <div class="mobile-menu">
@@ -18,30 +22,40 @@
           <div class="line3"></div>
         </div>
         <ul class="nav-list">
-          <li><a id="teste" href="/">Início</a></li>
+          <li><a href="/">Início</a></li>
           <li><a href="/turmas">Turmas</a></li>
           <li><a href="/ranking">Ranking</a></li>
+          <% if(isAdmin) { %>
+          <li><a href="/admin">Admin</a></li>
+          <% } %> <% if (!logged) { %>
           <li><a href="/login">Entrar</a></li>
           <li><a href="/register">Registrar</a></li>
+          <% } %> <% if(logged) { %>
+          <li><a href="/perfil">Logado como <%= nomeUsuario %></a></li>
+          <li><a href="/login/logout">Sair</a></li>
+          <% } %>
         </ul>
       </nav>
     </header>
     <main>
-      <h1 class="title"> TURMAS </h1>
-      
+      <h1 class="title">TURMAS</h1>
+
       <ol style="--length: <%= turmas.length%>" role="list">
-        <% let contador = 0 %>
-        <% turmas.forEach(turma => { %>
-          <li class="itemTurma" href="/turmas/<%=turma.id%>" style="--i: <%=contador%>">
-            <a href="/turmas/<%=turma.id%>"> 
-              <h3> <%= turma.nome_disciplina %></h3>
-              <p> <b>Período:</b> <%= turma.periodo %></p>
-              <p> <b>Professor:</b> <%= turma.nome_professor %></p>
-              <p> <b>Turma:</b> <%= turma.turma%></p>
-              <% contador++ %>
-            </a>
-            </li>
-          <% })%>
+        <% let contador = 0 %> <% turmas.forEach(turma => { %>
+        <li
+          class="itemTurma"
+          href="/turmas/<%=turma.id%>"
+          style="--i: <%=contador%>"
+        >
+          <a href="/turmas/<%=turma.id%>">
+            <h3><%= turma.nome_disciplina %></h3>
+            <p><b>Período:</b> <%= turma.periodo %></p>
+            <p><b>Professor:</b> <%= turma.nome_professor %></p>
+            <p><b>Turma:</b> <%= turma.nome_turma%></p>
+            <% contador++ %>
+          </a>
+        </li>
+        <% })%>
       </ol>
     </main>
   </body>

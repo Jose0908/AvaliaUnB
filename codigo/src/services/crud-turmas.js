@@ -1,5 +1,4 @@
 import pool from './initBd.js';
-import Turma from '../models/turmaModel.js';
 
   export async function getTurmas() {
     const [rows] = await pool.query(`

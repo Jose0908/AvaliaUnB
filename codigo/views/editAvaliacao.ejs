@@ -9,6 +9,9 @@
   </head>
 
   <body>
+    <% nomeUsuario = contexto.nome %> <% isAdmin = contexto.isAdmin %> <% let
+    logged = (typeof nomeUsuario != 'undefined') %> <% if (logged) {nomeUsuario
+    = nomeUsuario.split(' ')[0]} %>
     <header>
       <nav>
         <a class="logo" href="/">UnB Avalia</a>
@@ -21,12 +24,20 @@
           <li><a href="/">Início</a></li>
           <li><a href="/turmas">Turmas</a></li>
           <li><a href="/ranking">Ranking</a></li>
+          <% if(isAdmin) { %>
+          <li><a href="/admin">Admin</a></li>
+          <% } %> <% if (!logged) { %>
           <li><a href="/login">Entrar</a></li>
           <li><a href="/register">Registrar</a></li>
+          <% } %> <% if(logged) { %>
+          <li><a href="/perfil">Logado como <%= nomeUsuario %></a></li>
+          <li><a href="/login/logout">Sair</a></li>
+          <% } %>
         </ul>
       </nav>
     </header>
     <main>
+      <% avaliacao = contexto.avaliacao %>
       <h1 class="title" style="font-size: 50px;"> Edite sua avaliação</h1>
       <div id="avaliacaoForm">
         <form action="/turmas/edit/<%= avaliacao.id %>" method="POST">

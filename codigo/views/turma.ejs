@@ -10,7 +10,9 @@
 
   <body>
     <% const turma = contexto.turma %> <% const avaliacoes = contexto.avaliacoes
-    %>
+    %> <% nomeUsuario = contexto.nome %> <% isAdmin = contexto.isAdmin %> <% let
+    logged = (typeof nomeUsuario != 'undefined') %> <% if (logged) {nomeUsuario
+    = nomeUsuario.split(' ')[0]} %>
     <header>
       <nav>
         <a class="logo" href="/">UnB Avalia</a>
@@ -23,8 +25,15 @@
           <li><a href="/">Início</a></li>
           <li><a href="/turmas">Turmas</a></li>
           <li><a href="/ranking">Ranking</a></li>
+          <% if(isAdmin) { %>
+          <li><a href="/admin">Admin</a></li>
+          <% } %> <% if (!logged) { %>
           <li><a href="/login">Entrar</a></li>
           <li><a href="/register">Registrar</a></li>
+          <% } %> <% if(logged) { %>
+          <li><a href="/perfil">Logado como <%= nomeUsuario %></a></li>
+          <li><a href="/login/logout">Sair</a></li>
+          <% } %>
         </ul>
       </nav>
     </header>
@@ -44,7 +53,8 @@
             class="avaliacaoDenuncia"
             type="text"
             name="avaliacao"
-            placeholder="Avaliação"></textarea>
+            placeholder="Avaliação"
+          ></textarea>
           <select value="Nota" name="Nota">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -57,7 +67,7 @@
         </form>
       </div>
 
-     <% if (Array.isArray(avaliacoes)) { %> <%
+      <% if (Array.isArray(avaliacoes)) { %> <%
       avaliacoes.reverse().forEach(avaliacao => { %>
       <li class="itemTurma">
         <div class="titulo_card">
@@ -102,15 +112,24 @@
       <% })%> <% } %>
 
       <div id="reportModal" style="display: none" class="modal">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Denunciar Avaliação</h3>
-            <form action="/denuncia/" method="post">
-              <textarea class="avaliacaoDenuncia" name="motivo" placeholder="Motivo"></textarea>
-              <input type="hidden" name="id_avaliacao" id="avaliacaoIdInput" value="" />
-              <input id="enviarDenuncia" type="submit" value="Enviar" />
-            </form>
-          </div>
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h3>Denunciar Avaliação</h3>
+          <form action="/denuncia/" method="post">
+            <textarea
+              class="avaliacaoDenuncia"
+              name="motivo"
+              placeholder="Motivo"
+            ></textarea>
+            <input
+              type="hidden"
+              name="id_avaliacao"
+              id="avaliacaoIdInput"
+              value=""
+            />
+            <input id="enviarDenuncia" type="submit" value="Enviar" />
+          </form>
+        </div>
       </div>
     </main>
 
@@ -120,11 +139,11 @@
       span.onclick = function () {
         modal.style.display = "none";
       };
-      window.onclick = function(event) {
+      window.onclick = function (event) {
         if (event.target == modal) {
           modal.style.display = "none";
         }
-      }
+      };
       document
         .getElementById("avaliacaoLink")
         .addEventListener("click", function (e) {
@@ -133,22 +152,22 @@
           document.getElementById("avaliacaoForm").style.display = "block";
           document.getElementById("avaliacaoLink").style.display = "none";
         });
-      document
-        .querySelectorAll(".reportButton")
-        .forEach(function (button) {
-          button.addEventListener("click", function (e) {
-            e.preventDefault(); // Impede o comportamento padrão da imagem
+      document.querySelectorAll(".reportButton").forEach(function (button) {
+        button.addEventListener("click", function (e) {
+          e.preventDefault(); // Impede o comportamento padrão da imagem
 
-            var avaliacaoId = button.getAttribute("data-avaliacao-id");
-            document.getElementById("avaliacaoIdInput").value = avaliacaoId;
+          var avaliacaoId = button.getAttribute("data-avaliacao-id");
+          document.getElementById("avaliacaoIdInput").value = avaliacaoId;
 
-            // Exibe o modal da denúncia
-            document.getElementById("reportModal").style.display = "block";
-          });
+          // Exibe o modal da denúncia
+          document.getElementById("reportModal").style.display = "block";
         });
-      document.getElementById("enviarDenuncia").addEventListener("click", function (e) {
-        document.getElementById("reportModal").style.display = "none";
       });
+      document
+        .getElementById("enviarDenuncia")
+        .addEventListener("click", function (e) {
+          document.getElementById("reportModal").style.display = "none";
+        });
     </script>
   </body>
 </html>

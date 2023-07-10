@@ -9,8 +9,8 @@
   </head>
 
   <body>
-    <% nomeUsuario = contexto.nomeUsuario %> <% isAdmin = contexto.isAdmin %>
-    <% let logged = (typeof nomeUsuario != 'undefined') %> <% if (logged)
+    <% nomeUsuario = contexto.nomeUsuario %> <% isAdmin = contexto.isAdmin %> <%
+    let logged = (typeof nomeUsuario != 'undefined') %> <% if (logged)
     {nomeUsuario = nomeUsuario.split(' ')[0]} %>
     <header>
       <nav>
@@ -25,13 +25,12 @@
           <li><a href="/turmas">Turmas</a></li>
           <li><a href="/ranking">Ranking</a></li>
           <% if(isAdmin) { %>
-            <li><a href="/admin">Admin</a></li>
-          <% } %>
-          <% if (!logged) { %>
+          <li><a href="/admin">Admin</a></li>
+          <% } %> <% if (!logged) { %>
           <li><a href="/login">Entrar</a></li>
           <li><a href="/register">Registrar</a></li>
           <% } %> <% if(logged) { %>
-          <li style="color: white">Logado como <%= nomeUsuario %></li>
+          <li><a href="/perfil">Logado como <%= nomeUsuario %></a></li>
           <li><a href="/login/logout">Sair</a></li>
           <% } %>
         </ul>
@@ -40,13 +39,15 @@
     <main>
       <h1 class="title">UnB Avalia!</h1>
       <p class="subtitle">Uma nova forma de avaliar os professores</p>
-      <p class="texto">
-        Descubra os melhores professores e disciplinas na UnB! Aqui, os alunos
-        têm a oportunidade de avaliar seus professores, dando acesso a
-        informações valiosas na hora de escolher suas disciplinas. Participe
-        dessa comunidade acadêmica, compartilhe suas opiniões e faça escolhas
-        informadas. Juntos, podemos melhorar a qualidade do ensino na UnB.
-      </p>
+      <div class="div-texto">
+        <p class="texto">
+          Descubra os melhores professores e disciplinas na UnB! Aqui, os alunos
+          têm a oportunidade de avaliar seus professores, dando acesso a
+          informações valiosas na hora de escolher suas disciplinas. Participe
+          dessa comunidade acadêmica, compartilhe suas opiniões e faça escolhas
+          informadas. Juntos, podemos melhorar a qualidade do ensino na UnB.
+        </p>
+      </div>
 
       <img src="avaliacao.png" class="imagem" />
     </main>
