@@ -33,15 +33,12 @@ export async function getUserbyId(id) {
 export async function createUser(dados) {
   const matricula = dados.matricula;
   let isAdmin = dados.admin;
-  console.log(isAdmin)
   if (typeof isAdmin == 'undefined' || isAdmin === 'Não') {
     isAdmin = 0;
   }
   if (isAdmin === 'Sim') {
-    console.log('entrou')
     isAdmin = 1;
   }
-  console.log(isAdmin)
   const nome = dados.nome;
   const email = dados.email;
   const curso = dados.curso;
@@ -85,4 +82,19 @@ export async function updateUser(
   return result.affectedRows === 1
     ? "Usuário atualizado com sucesso"
     : "Usuário não encontrado";
+}
+
+export async function updateProfilePhoto(userId, photoBlob) {
+  const query = "UPDATE Usuarios SET foto_de_perfil = ? WHERE id = ?";
+  const params = [photoBlob, userId];
+  
+  try {
+    const [result] = await pool.query(query, params);
+    return result.affectedRows === 1
+      ? "Foto de perfil atualizada com sucesso"
+      : "Usuário não encontrado";
+  } catch (error) {
+    console.error("Erro ao atualizar a foto de perfil:", error);
+    return "Erro ao atualizar a foto de perfil";
+  }
 }

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UnB Avalia</title>
-    <link rel="stylesheet" href="/css/ranking.css" />
+    <link rel="stylesheet" href="/css/perfil.css" />
   </head>
 
   <body>
@@ -37,7 +37,39 @@
       </nav>
     </header>
     <main>
-      <img src="data:image/jpeg;base64, <%= contexto.blob %>" alt="Imagem de Perfil">
+      <% usuario = contexto.user %>
+      <div class="foto">
+        <% if ( typeof contexto.user.foto_de_perfil != 'undefined' && usuario.foto_de_perfil != null) { %>
+        <img src="data:image/jpeg;base64,<%= contexto.user.foto_de_perfil.toString('base64') %>" alt="Foto de perfil">
+        <% } %>
+      </div>
+
+      <div class="informacoes_usuario">
+        <div class="infos">
+          <p>Nome: <%= usuario.nome %></p>
+          <p>Matrícula: <%= usuario.matricula %></p>
+          <p>Curso: <%= usuario.curso %></p>
+          <p>Email: <%= usuario.email %></p>
+          <p>Senha: <%= usuario.senha %></p>
+          <% if (usuario.isAdmin) { %>
+          <p>Usuário administrador</p>
+          <% } else { %>
+          <p>Usuário comum</p>
+          <% } %>
+          <form action="/perfil/" method="POST" enctype="multipart/form-data">
+            <input
+              type="file"
+              id="imagemInput"
+              accept="image/*"
+              name="imagem"
+            />
+            <button type="submit">Enviar</button>
+          </form>
+        </div>
+        <div class="avaliacoes">
+          <p>Avaliações</p>
+        </div>
+      </div>
     </main>
   </body>
 </html>

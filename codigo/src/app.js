@@ -2,7 +2,6 @@ import express from "express";
 import sessions from "express-session";
 import cookieParser from "cookie-parser";
 
-
 import login from "./controllers/login.js";
 import register from "./controllers/register.js";
 import turmaController from "./controllers/turmaController.js";
@@ -10,6 +9,8 @@ import adminController from "./controllers/adminController.js";
 import denunciaController from "./controllers/denunciaController.js";
 import rankingController from "./controllers/rankingController.js";
 import profileController from "./controllers/profileController.js";
+
+import fs from "fs";
 
 const app = express();
 app.set("view engine", "ejs");

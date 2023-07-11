@@ -28,7 +28,6 @@ export async function getAvaliacaoFromTurma(id_turma) {
 export async function createAvaliacao(avaliacao) {
     const [id_usuario] = await pool.query(`
     SELECT id FROM Usuarios WHERE nome = ?`, [avaliacao.nome_estudante]);
-    console.log(id_usuario[0].id)
     const [result] = await pool.query(`
     INSERT INTO Avaliacoes (fk_id_user, avaliacao, fk_id_turma, nota)
     VALUES (?, ?, ?, ?)
@@ -47,4 +46,6 @@ export async function updateAvaliacao(id, avaliacao) {
     `, [avaliacao.avaliacao, avaliacao.Nota, id]);
     return result.affectedRows === 1 ? 'Avaliacao atualizada com sucesso' : 'Avaliacao não encontrada';
 }
+const teste = await getAvaliacoes();
+
 

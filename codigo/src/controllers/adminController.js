@@ -35,7 +35,6 @@ router.get("/", async (req, res) => {
 router.post("/deleteUser/:id", async (req, res) => {
   const id = req.params.id;
   const userDeleted = await deleteUser(id);
-  console.log(userDeleted);
   res.redirect("/admin");
 });
 
@@ -54,17 +53,13 @@ router.get("/editUser/:id", async (req, res) => {
 router.post("/editUser/:id", async (req, res) => {
   const id = req.params.id;
   const user = req.body;
-  console.log(user);
   const userUpdated = await updateUser(id, user);
-  console.log(userUpdated);
   res.redirect("/admin");
 });
 
 router.post("/createUser", async (req, res) => {
   const user = req.body;
-  console.log(user);
   const userCreated = await createUser(user);
-  console.log(userCreated);
   res.redirect("/admin");
 });
 
