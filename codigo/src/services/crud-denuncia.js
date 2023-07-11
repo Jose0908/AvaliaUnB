@@ -49,9 +49,7 @@ export async function createAvaliacao(avaliacao) {
 }
 
 export async function deleteDenuncia(id) {
-  const [result] = await pool.query("DELETE FROM Denuncias WHERE id = ?", [
-    id,
-  ]);
+  const [result] = await pool.query("DELETE FROM Denuncias WHERE id = ?", [id]);
   return result.affectedRows === 1
     ? "Denuncia deletada com sucesso"
     : "Denuncia não encontrada";
@@ -69,7 +67,7 @@ export async function updateAvaliacao(id, avaliacao) {
     : "Avaliacao não encontrada";
 }
 
-export async function handleDenuncia (id, acao) {
+export async function handleDenuncia(id, acao) {
   const [result] = await pool.query(
     `
     call AvaliarDenunciaComentarioOfensivo(?, ?)
@@ -77,4 +75,3 @@ export async function handleDenuncia (id, acao) {
     [id, acao]
   );
 }
-

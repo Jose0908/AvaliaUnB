@@ -9,6 +9,7 @@ import turmaController from "./controllers/turmaController.js";
 import adminController from "./controllers/adminController.js";
 import denunciaController from "./controllers/denunciaController.js";
 import rankingController from "./controllers/rankingController.js";
+import profileController from "./controllers/profileController.js";
 
 const app = express();
 app.set("view engine", "ejs");
@@ -31,6 +32,7 @@ app.use("/turmas", turmaController);
 app.use("/admin", adminController);
 app.use("/denuncia", denunciaController);
 app.use("/ranking", rankingController);
+app.use("/perfil", profileController);
 
 app.get("/", (req, res) => {
   const nomeUsuario = req.session.nome;
