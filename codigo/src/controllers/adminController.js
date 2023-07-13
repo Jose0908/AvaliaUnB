@@ -53,13 +53,23 @@ router.get("/editUser/:id", async (req, res) => {
 router.post("/editUser/:id", async (req, res) => {
   const id = req.params.id;
   const user = req.body;
-  const userUpdated = await updateUser(id, user);
+  try {
+    const userUpdated = await updateUser(id, user);
+  }
+  catch (err) {
+    console.log(err);
+  }
   res.redirect("/admin");
 });
 
 router.post("/createUser", async (req, res) => {
   const user = req.body;
-  const userCreated = await createUser(user);
+  try {
+    const userCreated = await createUser(user);
+  }
+  catch (err) {
+    console.log(err);
+  }
   res.redirect("/admin");
 });
 

@@ -63,6 +63,31 @@ export async function createUser(dados) {
 }
 
 export async function deleteUser(id) {
+
+  // deletar denuncias que o usuario fez
+  const [denuncias] = await pool.query(
+    "DELETE FROM Denuncias WHERE id_denunciante = ?",
+    [id]
+  );
+
+  // deletar denuncias que o usuario recebeu
+  const [denuncias2] = await pool.query(
+    `DELETE FROM Denuncias
+    WHERE id_avaliacao IN (
+        SELECT id 
+        FROM Avaliacoes
+        WHERE fk_id_user = ?
+    );
+    `,
+    [id]
+  );
+
+  // deletar avaliacoes do usuario
+  const [avaliacoes] = await pool.query(
+    "DELETE FROM Avaliacoes WHERE fk_id_user = ?",
+    [id]
+  );
+
   const [result] = await pool.query(
     "DELETE FROM Usuarios WHERE id = ?",
     [id]
@@ -75,6 +100,11 @@ export async function deleteUser(id) {
 export async function updateUser(
   id, user
 ) {
+
+  if (user.nome === "" || user.email === "" || user.senha === "" || user.curso === "" || user.matricula === "") {
+    return "Preencha todos os campos";
+  }
+
   const [result] = await pool.query(
     "UPDATE Usuarios SET nome = ?, email = ?, senha = ?, curso = ?, matricula = ?, isAdmin = ? WHERE id = ?",
     [user.nome, user.email, user.senha, user.curso, user.matricula, user.isAdmin, id]
