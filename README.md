@@ -6,15 +6,15 @@ A pasta código contém todo o código fonte, assim como os comandos SQL utiliza
 
 ## Passos para executar:
 
-1°) Crie um banco de dados em mysql.
+1°: Crie um banco de dados em mysql.
 
-2°) Se não exisitr, crie um arquivo .env, em /codigo, com as variáveis de ambiente. Exemplo:
+2°: Se não exisitr, crie um arquivo .env, em /codigo, com as variáveis de ambiente. Exemplo:
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = 'sua senha'
 MYSQL_DATABASE = 'nome do seu db'
 
-3°) Ainda em  /codigo, rode os comandos:
+3°: Ainda em  /codigo, rode os comandos:
 yarn createdb
 yarn dev
 

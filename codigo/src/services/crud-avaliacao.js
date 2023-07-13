@@ -48,6 +48,7 @@ export async function createAvaliacao(avaliacao) {
 }
 
 export async function deleteAvaliacao(id) {
+  const [rows] = await pool.query("DELETE FROM Denuncias WHERE id_avaliacao = ?", [id]);
   const [result] = await pool.query("DELETE FROM Avaliacoes WHERE id = ?", [
     id,
   ]);
