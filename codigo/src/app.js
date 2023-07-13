@@ -2,6 +2,7 @@ import express from "express";
 import sessions from "express-session";
 import cookieParser from "cookie-parser";
 
+import landingPage from "./controllers/landingPage.js";
 import login from "./controllers/login.js";
 import register from "./controllers/register.js";
 import turmaController from "./controllers/turmaController.js";
@@ -27,6 +28,7 @@ app.use(
   })
 );
 
+app.use("/", landingPage);
 app.use("/login", login);
 app.use("/register", register);
 app.use("/turmas", turmaController);
@@ -35,15 +37,6 @@ app.use("/denuncia", denunciaController);
 app.use("/ranking", rankingController);
 app.use("/perfil", profileController);
 
-app.get("/", (req, res) => {
-  const nomeUsuario = req.session.nome;
-  const isAdmin = req.session.isAdmin;
-  const contexto = {
-    nomeUsuario: nomeUsuario,
-    isAdmin: isAdmin,
-  };
-  res.render("index.ejs", {contexto});
-});
 
 app.listen(3000, () => {
   console.log(`Servidor rodando em localhost:3000`);
