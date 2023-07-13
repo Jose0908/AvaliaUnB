@@ -18,6 +18,9 @@ BEGIN
         -- Excluir a denúncia da tabela Denuncias
         DELETE FROM Denuncias
         WHERE id = denuncia_id;
+        -- Excluir as denúncias relacionadas à avaliação
+        DELETE FROM Denuncias
+        WHERE id_avaliacao = avaliacao_id;
         -- Aceitar a denúncia e excluir a avaliação associada
         DELETE FROM Avaliacoes
         WHERE id = avaliacao_id;

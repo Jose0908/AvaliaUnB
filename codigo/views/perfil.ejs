@@ -9,9 +9,10 @@
   </head>
 
   <body>
-    <% nomeUsuario = contexto.nome %> <% isAdmin = contexto.isAdmin %> <% let
-    logged = (typeof nomeUsuario != 'undefined') %> <% if (logged) {nomeUsuario
-    = nomeUsuario.split(' ')[0]} %>
+    <% nomeUsuario = contexto.nome %> <% isAdmin = contexto.isAdmin %> <%
+    avaliacoes = contexto.avaliacaoDoUsuario %> <% let logged = (typeof
+    nomeUsuario != 'undefined') %> <% if (logged) { nomeUsuario =
+    nomeUsuario.split(' ')[0] } %>
     <header>
       <nav>
         <a class="logo" href="/">UnB Avalia</a>
@@ -24,12 +25,12 @@
           <li><a href="/">Início</a></li>
           <li><a href="/turmas">Turmas</a></li>
           <li><a href="/ranking">Ranking</a></li>
-          <% if(isAdmin) { %>
+          <% if (isAdmin) { %>
           <li><a href="/admin">Admin</a></li>
           <% } %> <% if (!logged) { %>
           <li><a href="/login">Entrar</a></li>
           <li><a href="/register">Registrar</a></li>
-          <% } %> <% if(logged) { %>
+          <% } %> <% if (logged) { %>
           <li><a href="/perfil">Logado como <%= nomeUsuario %></a></li>
           <li><a href="/login/logout">Sair</a></li>
           <% } %>
@@ -38,38 +39,140 @@
     </header>
     <main>
       <% usuario = contexto.user %>
-      <div class="foto">
-        <% if ( typeof contexto.user.foto_de_perfil != 'undefined' && usuario.foto_de_perfil != null) { %>
-        <img src="data:image/jpeg;base64,<%= contexto.user.foto_de_perfil.toString('base64') %>" alt="Foto de perfil">
-        <% } %>
+
+      <div class="container-usuario">
+        <div class="card">
+          <div class="card-body">
+            <div class="foto-do-perfil" onclick="activateForm()">
+              <% if ( typeof contexto.user.foto_de_perfil != 'undefined' && usuario.foto_de_perfil != null ) { %>
+              <img
+                class="foto-perfil"
+                src="data:image/jpeg;base64,<%= contexto.user.foto_de_perfil.toString('base64') %>"
+                alt="Foto de perfil"
+              />
+              <% } else {%>
+              <img
+                class="foto-perfil"
+                src="/profile.jpg"
+                alt="Foto de perfil"
+              />
+              <% } %>
+              <span class="editar-imagem">Editar imagem?</span>
+            </div>
+            <h4 class="nomeusuario"><%= usuario.nome %></h4>
+            <% if (usuario.isAdmin) { %>
+            <p>Usuário administrador</p>
+            <% } else { %>
+            <p>Usuário comum</p>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="card-infos-outside">
+          <div class="card-infos">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Nome Completo</h6>
+              </div>
+              <div class="col-sm-9 text-secondary"><%= usuario.nome %></div>
+            </div>
+            <hr />
+
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary"><%= usuario.email %></div>
+            </div>
+            <hr />
+
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Curso</h6>
+              </div>
+              <div class="col-sm-9 text-secondary"><%= usuario.curso %></div>
+            </div>
+            <hr />
+
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Matrícula</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <%= usuario.matricula %>
+              </div>
+            </div>
+            <hr />
+
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Senha</h6>
+              </div>
+              <div class="col-sm-9 text-secondary"><%= usuario.senha %></div>
+            </div>
+            <hr />
+
+            <a href="/perfil/editarPerfil"> <img class="edit-button" src="/edit.png"> </a>
+
+            </div>
+        </div>
       </div>
 
-      <div class="informacoes_usuario">
-        <div class="infos">
-          <p>Nome: <%= usuario.nome %></p>
-          <p>Matrícula: <%= usuario.matricula %></p>
-          <p>Curso: <%= usuario.curso %></p>
-          <p>Email: <%= usuario.email %></p>
-          <p>Senha: <%= usuario.senha %></p>
-          <% if (usuario.isAdmin) { %>
-          <p>Usuário administrador</p>
-          <% } else { %>
-          <p>Usuário comum</p>
-          <% } %>
-          <form action="/perfil/" method="POST" enctype="multipart/form-data">
-            <input
-              type="file"
-              id="imagemInput"
-              accept="image/*"
-              name="imagem"
-            />
-            <button type="submit">Enviar</button>
-          </form>
-        </div>
-        <div class="avaliacoes">
-          <p>Avaliações</p>
+      <% if (avaliacoes != 'Avaliacao não encontrada') { %>
+      <div class="card">
+        <div class="card-avaliacao">
+          <h4 class="titulo-avaliacao">Avaliações</h4>
+          <hr />
+          <% avaliacoes.forEach(avaliacao => { %>
+          <div class="avaliacao">
+            <p>Disciplina: <%= avaliacao.nome_disciplina%></p>
+            <p>Professor: <%=avaliacao.nome_professor%></p>
+            <p>Comentário: <%= avaliacao.avaliacao %></p>
+            <div class="avaliacao-nota">
+              <p>Nota: <%= avaliacao.nota %>/5</p>
+            </div>
+          </div>
+          <% })} %>
         </div>
       </div>
+
+      <form
+        style="display: none"
+        action="/perfil/"
+        method="POST"
+        enctype="multipart/form-data"
+        id="enviar-imagem"
+      >
+        <input type="file" id="imagemInput" accept="image/*" name="imagem" />
+        <button type="submit">Enviar</button>
+      </form>
+
     </main>
   </body>
 </html>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var fotoPerfil = document.querySelector(".foto-perfil");
+    var editarImagem = document.querySelector(".editar-imagem");
+    var divfotoPerfil = document.querySelector(".foto-do-perfil");
+
+    divfotoPerfil.addEventListener("mouseover", function () {
+      editarImagem.style.display = "block";
+      fotoPerfil.style.filter = "brightness(70%)";
+      fotoPerfil.transition = "all .5s ease";
+    });
+
+    divfotoPerfil.addEventListener("mouseout", function () {
+      editarImagem.style.display = "none";
+      fotoPerfil.style.filter = "brightness(100%)";
+    });
+  });
+
+  function activateForm() {
+    var imagemInput = document.getElementById("imagemInput");
+    imagemInput.onchange = function () {
+      document.getElementById("enviar-imagem").submit();
+    };
+    imagemInput.click();
+  }
+</script>

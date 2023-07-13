@@ -47,7 +47,7 @@ router.get("/editUser/:id", async (req, res) => {
     nome: req.session.nome,
   };
 
-  res.render("editUsuario.ejs", { contexto });
+  res.render("adminEditUsuario.ejs", { contexto });
 });
 
 router.post("/editUser/:id", async (req, res) => {

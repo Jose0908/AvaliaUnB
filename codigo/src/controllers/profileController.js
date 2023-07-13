@@ -1,5 +1,6 @@
 import express, { Router } from "express";
-import { getUserbyId, updateProfilePhoto } from "../services/crud-usuario.js";
+import { getUserbyId, updateProfilePhoto, updateUser } from "../services/crud-usuario.js";
+import { getAvaliacaoFromUser } from "../services/crud-avaliacao.js";
 import fileUpload from "express-fileupload";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -15,20 +16,14 @@ router.use(express.static("public"));
 
 router.get("/", async (req, res) => {
   const [user] = await getUserbyId(req.session.userId);
+  const avaliacaoDoUsuario = await getAvaliacaoFromUser(req.session.userId);
+
   let blobUrl = "";
-
-  // Ler o arquivo e obter o conteúdo como um Buffer
-  //const fileContent = readFileSync(user.foto_de_perfil);
-
-  // Converter o conteúdo em uma string base64
-  //const base64Image = fileContent.toString('base64');
-
-  // Criar a URL de dados
-  // blobUrl = `data:${user.foto_de_perfil.mimetype};base64,${base64Image}`;
 
   const contexto = {
     isAdmin: req.session.isAdmin,
     nome: req.session.nome,
+    avaliacaoDoUsuario,
     user,
     blobUrl, // Passar o URL de dados para o contexto
   };
@@ -49,6 +44,24 @@ router.post("/", async (req, res) => {
   console.log("Arquivo salvo com sucesso!");
   req.session.fileName = file.name; // Armazenar o nome do arquivo na sessão
 
+  res.redirect("/perfil");
+});
+
+router.get("/editarPerfil", async (req, res) => {
+  const id = req.session.userId;
+  const [user] = await getUserbyId(id);
+  const contexto = {
+    user: user,
+    isAdmin: req.session.isAdmin,
+    nome: req.session.nome,
+  };
+  res.render("editarPerfil.ejs", { contexto });
+});
+
+router.post("/editarPerfil", async (req, res) => {
+  const id = req.session.userId;
+  const user = req.body;
+  const userUpdated = await updateUser(id, user);
   res.redirect("/perfil");
 });
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UnB Avalia</title>
+    <link rel="stylesheet" href="/css/editUser.css" />
+  </head>
+
+  <body>
+    <% nomeUsuario = contexto.nomeUsuario %> <% isAdmin = contexto.isAdmin %> <%
+    let logged = (typeof nomeUsuario != 'undefined') %> <% if (logged)
+    {nomeUsuario = nomeUsuario.split(' ')[0]} %>
+    <header>
+      <nav>
+        <a class="logo" href="/">UnB Avalia</a>
+        <div class="mobile-menu">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+        <ul class="nav-list">
+          <li><a href="/">Início</a></li>
+          <li><a href="/turmas">Turmas</a></li>
+          <li><a href="/ranking">Ranking</a></li>
+          <% if(isAdmin) { %>
+          <li><a href="/admin">Admin</a></li>
+          <% } %> <% if (!logged) { %>
+          <li><a href="/login">Entrar</a></li>
+          <li><a href="/register">Registrar</a></li>
+          <% } %> <% if(logged) { %>
+          <li><a href="/perfil">Logado como <%= nomeUsuario %></a></li>
+          <li><a href="/login/logout">Sair</a></li>
+          <% } %>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <% user = contexto.user %>
+      <div id="editarUsuarioForm">
+        <form action="/perfil/editarPerfil/" method="POST">
+          <label for="nome">Nome</label>
+          <input type="text" name="nome" placeholder="Nome do Usuario" value = "<%=user.nome%>"/>
+          <label for="matricula">Matricula</label>
+          <input type="text" name="matricula" placeholder="Matricula do Usuario" value = "<%=user.matricula%>"/>
+          <label for="email">Email</label>
+          <input type="text" name="email" placeholder="Email do Usuario" value = "<%=user.email%>"/>
+          <label for="curso">Curso</label>
+          <input type="text" name="curso" placeholder="Curso do Usuario" value = "<%=user.curso%>"/>
+          <label for="senha">Senha</label>
+          <input type="text" name="senha" placeholder="Senha do Usuario" value = "<%=user.senha%>"/>
+          <% if(contexto.isAdmin) {%>
+          <input type="hidden" name="isAdmin" value="1" />
+          <% } else { %>
+          <input type="hidden" name="isAdmin" value="0" />
+          <% } %>
+            <input style="margin-top:45px"type="submit" value="Enviar" />
+          </form>
+      </div>
+    </main>
+  </body>
+</html>

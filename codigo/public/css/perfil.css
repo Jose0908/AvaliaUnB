@@ -42,29 +42,106 @@ nav {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: whitesmoke;
+  color: #1a202c;
+  background-color: #e2e8f0;    
+}
+
+.card {
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  margin: 30px;
+}
+
+.card-body {
+  padding: 3rem;
+  text-align: center;
+}
+
+.foto-perfil{
+  max-width:300px;
+  max-height:200px;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+  margin: 0 auto 0 auto;
+  display: block;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.editar-imagem {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 
-.foto {
-    padding-top: 50px;
-    padding-bottom: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.foto-do-perfil {
+  position: relative;
+  display: inline-block;
 }
 
-img {
-    border-radius: 50%;
-    width: 300px;
-    height: 300px;
+.container-usuario {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  font-size: 20px;
 }
-.informacoes_usuario {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+
+.card-infos {
+  padding: 3rem;
 }
-.infos {
-    width: 50%;
+
+.card-infos-outside {
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+  font-size: 20px;
+  width: 70%;
+  height: 300px;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  margin: 50px;
+}
+
+.card-avaliacao{
+  font-size: 20px;
+  height: 50%;
+  padding: 3rem;
+  border-radius: 1rem;
+}
+
+.titulo-avaliacao{
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.avaliacao {
+  margin: 10px;
+  font-size: 20px;
+}
+
+.edit-button {
+  padding-top: 10px;
+  margin-bottom: 10px;
+  width: 30px; /* Define a largura desejada */
+  height: auto; /* Mantém a proporção original da imagem */
+  float: right;
 }

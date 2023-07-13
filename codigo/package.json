@@ -5,6 +5,7 @@
   "type": "module",
   "main": "app.js",
   "scripts": {
+    "createdb": "node createTables.js",
     "dev": "nodemon src/app.js"
   },
   "author": "Jose Roberto",
