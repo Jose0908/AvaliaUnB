@@ -1,4 +1,6 @@
-# trabalho-final-BD
+# AvaliaUnB
+
+### Aplicação que consiste em uma forma de os alunos avaliarem o desempenho dos professores. Tem o objetivo de ajudar o aluno a escolher as matérias com o professor que mais se encaixa em seu perfil.
 
 ## Estrutura dos diretórios
 
